@@ -24,9 +24,9 @@ public class ProducerApi {
   }
 
   @PostMapping("send")
-  public ResponseEntity<String> sendMessage(String topic, String message) {
-    log.info("Sending message: topic={}, message={}", topic, message);
-    producerService.sendMessage(topic, message);
+  public ResponseEntity<String> sendMessage(String message) {
+    log.info("Sending message: message={}", message);
+    producerService.sendMessage(message);
     return ResponseEntity.ok("Message sent successfully");
   }
 }

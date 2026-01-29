@@ -13,15 +13,10 @@ public class ProducerService {
   @Value("${kafka.topic.name}")
   private String topicName;
 
-  private KafkaTemplate<String, String> kafkaTemplate;
+  private final KafkaTemplate<String, Object> kafkaTemplate;
 
-  public void sendMessage(String topic, String message) {
-    log.info("Sending message:{}", message);
-    if (topic == null) {
-      log.warn("Topic is null, cannot send message");
-      return;
-    }
-    log.info("Sending message to topic: {} with message: {}", topic, message);
-    kafkaTemplate.send(topic, message);
+  public void sendMessage(String message) {
+    log.info("Sending message to topic: {} with message: {}", topicName, message);
+    kafkaTemplate.send(topicName, message);
   }
 }
