@@ -16,6 +16,7 @@ public class ProducerService {
   private final KafkaTemplate<String, Object> kafkaTemplate;
 
   public void sendMessage(String message) {
+    assert kafkaTemplate != null : "KafkaTemplate cannot be null";
     log.info("Sending message to topic: {} with message: {}", topicName, message);
     kafkaTemplate.send(topicName, message);
   }

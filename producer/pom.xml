@@ -102,6 +102,21 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
+          <image>
+            <name>nisargpanchal/producer:${project.version}</name>
+            <env>
+              <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+              <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+              <BP_BOOT_NATIVE_IMAGE>true</BP_BOOT_NATIVE_IMAGE>
+              <BP_MAVEN_BUILD_ARGUMENTS>-DskipTests</BP_MAVEN_BUILD_ARGUMENTS>
+              <BP_MAVEN_BUILD>true</BP_MAVEN_BUILD>
+              <BP_SPRING_AOT_ENABLED>true</BP_SPRING_AOT_ENABLED>
+              <BP_JVM_CDS_ENABLED>true</BP_JVM_CDS_ENABLED>
+              <BPL_JMX_ENABLED>true</BPL_JMX_ENABLED>
+              <BPL_JAVA_NMT_LEVEL>detail</BPL_JAVA_NMT_LEVEL>
+              <BPE_APPEND_JAVA_TOOL_OPTIONS>-XX:+HeapDumpOnOutOfMemoryError</BPE_APPEND_JAVA_TOOL_OPTIONS>
+            </env>
+          </image>
           <excludes>
             <exclude>
               <groupId>org.projectlombok</groupId>
@@ -109,6 +124,13 @@
             </exclude>
           </excludes>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>process-aot</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
