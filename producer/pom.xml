@@ -102,12 +102,15 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
+          <layers>
+            <enabled>true</enabled>
+          </layers>
           <image>
             <name>nisargpanchal/producer:${project.version}</name>
             <env>
               <BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
-              <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
-              <BP_BOOT_NATIVE_IMAGE>true</BP_BOOT_NATIVE_IMAGE>
+              <!--PRODUCTION ONLY-->
+              <!--<BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>-->
               <BP_MAVEN_BUILD_ARGUMENTS>-DskipTests</BP_MAVEN_BUILD_ARGUMENTS>
               <BP_MAVEN_BUILD>true</BP_MAVEN_BUILD>
               <BP_SPRING_AOT_ENABLED>true</BP_SPRING_AOT_ENABLED>
@@ -126,6 +129,20 @@
         </configuration>
         <executions>
           <execution>
+            <id>build-info</id>
+            <goals>
+              <goal>build-info</goal>
+            </goals>
+            <configuration>
+              <additionalProperties>
+                <encoding.source>UTF-8</encoding.source>
+                <encoding.reporting>UTF-8</encoding.reporting>
+                <java.version>${java.version}</java.version>
+              </additionalProperties>
+            </configuration>
+          </execution>
+          <execution>
+            <id>aot</id>
             <goals>
               <goal>process-aot</goal>
             </goals>
